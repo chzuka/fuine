@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "调试",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Fuine/bin/Debug/net7.0-windows10.0.22000.0/Fuine.exe",
+            "cwd": "${workspaceFolder}/src/Fuine",
+            "console": "internalConsole",
+        }
+    ]
+}

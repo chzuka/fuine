@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="Fuine.Views.Pages.SubscriptionsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="SubscriptionsPage"
+    AllowDrop="True"
+    Background="Transparent"
+    DragEnter="DragEnterCommand"
+    DragLeave="DragLeaveCommand"
+    DragOver="DragOverCommand"
+    Drop="DropCommand"
+    PreviewDragEnter="DragEnterCommand"
+    PreviewDragLeave="DragLeaveCommand"
+    PreviewDragOver="DragOverCommand"
+    PreviewDrop="DropCommand">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ui:CardControl
+            Margin="20,0,20,10"
+            Header="更新订阅"
+            Icon="ArrowDownload20">
+            <ui:Button
+                Width="140"
+                Command="{Binding ViewModel.UpdateCommand}"
+                Content="更新" />
+        </ui:CardControl>
+        <ScrollViewer
+            Grid.Row="1"
+            Margin="20,0,7,20"
+            VerticalAlignment="Stretch"
+            VerticalScrollBarVisibility="Visible">
+            <ui:TextBox
+                x:Name="textbox"
+                MinHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"
+                VerticalAlignment="Stretch"
+                AcceptsReturn="True"
+                ClearButtonEnabled="False"
+                FontSize="16"
+                PlaceholderText="此处添加订阅"
+                Text="{Binding ViewModel.Links, UpdateSourceTrigger=PropertyChanged}"
+                MouseLeave="Textbox_MouseLeave">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeave">
+                        <i:InvokeCommandAction Command="{Binding ViewModel.ChangeSubscriptionsCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ui:TextBox>
+        </ScrollViewer>
+    </Grid>
+</Page>

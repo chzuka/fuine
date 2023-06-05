@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows10.0.22000.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<Version>0.1</Version>
+		<UseWPF>true</UseWPF>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<ApplicationIcon>app.ico</ApplicationIcon>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DebugSymbols>False</DebugSymbols>
+		<DebugType>None</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DynamicData" Version="7.14.2" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.710" />
+		<PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+		<PackageReference Include="TaskScheduler" Version="2.10.1" />
+		<PackageReference Include="Tomlyn" Version="0.16.2" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.4.23259.5" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="WPF-UI" Version="3.0.0-preview.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Resources\Fonts\JetBrainsMono-Regular.ttf" />
+		<Resource Include="Resources\Images\app.png" />
+		<Resource Include="Resources\Images\clash.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="app.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include=".editorconfig" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /d /y /i /e $(ProjectDir)Resources\Apps\*.* $(TargetDir)resources" />
+		<Message Text="文件已成功复制到生成目录" Importance="high" />
+	</Target>
+
+	<Target Name="PostPublish" AfterTargets="Publish">
+		<Exec Command="xcopy /d /y /i /e $(ProjectDir)Resources\Apps\*.* $(PublishDir)resources" />
+		<Message Text="文件已成功复制到发布目录" Importance="high" />
+	</Target>
+
+</Project>

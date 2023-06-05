@@ -1,0 +1,177 @@
+﻿<Page
+    x:Class="Fuine.Views.Pages.ProxiesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Fuine.Converters"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="ProxiesPage">
+    <Page.Resources>
+        <converters:MultiBindingConverter x:Key="MultiBindingConverter" />
+        <converters:NotEqualConverter x:Key="NotEqualConverter" />
+        <converters:DelayToColorConverter x:Key="DelayToColorConverter" />
+        <Style x:Key="ProxiesControlTemplate" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Focusable" Value="{Binding ElementName=ProxyGroupsListView, Path=SelectedItem.Type, Converter={StaticResource NotEqualConverter}, ConverterParameter=URLTest}" />
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+            <Setter Property="Margin" Value="3" />
+            <Setter Property="Padding" Value="4" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="Border" CornerRadius="{TemplateBinding Border.CornerRadius}">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource SubtleFillColorSecondary}" />
+                            </Border.Background>
+                            <Grid>
+                                <ContentPresenter Margin="{TemplateBinding Padding}" />
+                                <Rectangle
+                                    x:Name="ActiveRectangle"
+                                    Width="4"
+                                    Height="24"
+                                    Margin="0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    RadiusX="2"
+                                    RadiusY="2"
+                                    Visibility="Collapsed">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{DynamicResource SystemAccentColorSecondary}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsEnabled" Value="True" />
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Opacity="0.2" Color="{DynamicResource SystemAccentColor}" />
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiTrigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ActiveRectangle" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Opacity="0.4" Color="{DynamicResource SystemAccentColor}" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="ProxiesDataTemplate">
+            <Grid
+                Width="200"
+                Height="48"
+                Margin="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="4"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FontSize="13"
+                    Text="{Binding Name}"
+                    TextTrimming="CharacterEllipsis" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="4"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Foreground="Gray"
+                    Text="{Binding Type}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="4"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Foreground="{Binding Delay, Converter={StaticResource DelayToColorConverter}}"
+                    Text="{Binding Delay, StringFormat={}{0} ms, TargetNullValue={x:Null}}" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ListView
+            x:Name="ProxyGroupsListView"
+            Width="280"
+            Margin="20,4,0,20"
+            ItemsSource="{Binding ViewModel.ProxyGroupsCollection}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            SelectedValue="{Binding ViewModel.ProxyGroupSelectedValue, Mode=TwoWay}"
+            Visibility="{Binding ViewModel.IsVisibility}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=ViewModel.ChangeProxyGroupCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, FallbackValue={x:Null}, Path=SelectedValue.Name}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="18" Margin="20,4,4,4">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="{Binding Name}" />
+                        <TextBlock
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Foreground="{Binding Delay, Converter={StaticResource DelayToColorConverter}}"
+                            Text="{Binding Delay, StringFormat={}{0} ms, TargetNullValue={x:Null}}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ui:VirtualizingGridView
+            Grid.Column="1"
+            Margin="0,0,0,20"
+            HorizontalAlignment="Right"
+            ItemContainerStyle="{StaticResource ProxiesControlTemplate}"
+            ItemTemplate="{StaticResource ProxiesDataTemplate}"
+            ItemsSource="{Binding ElementName=ProxyGroupsListView, Path=SelectedItem.Proxies}"
+            SelectedValue="{Binding ViewModel.ProxySelectedValue, Mode=TwoWay}"
+            SelectedValuePath="Name"
+            SpacingMode="StartAndEndOnly">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=ViewModel.ChangeProxyCommand}">
+                        <i:InvokeCommandAction.CommandParameter>
+                            <MultiBinding Converter="{StaticResource MultiBindingConverter}">
+                                <Binding ElementName="ProxyGroupsListView" Path="SelectedValue" />
+                                <Binding Path="SelectedValue" RelativeSource="{RelativeSource AncestorType={x:Type ui:VirtualizingGridView}}" />
+                            </MultiBinding>
+                        </i:InvokeCommandAction.CommandParameter>
+                    </i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ui:VirtualizingGridView>
+    </Grid>
+</Page>

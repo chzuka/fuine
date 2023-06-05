@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="Fuine.Views.Pages.ConnectionsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="ConnectionsPage">
+    <DataGrid
+        Margin="20,0,10,20"
+        VerticalContentAlignment="Center"
+        AutoGenerateColumns="False"
+        Background="Transparent"
+        BorderThickness="0"
+        CanUserReorderColumns="False"
+        CanUserResizeColumns="False"
+        CanUserSortColumns="True"
+        EnableColumnVirtualization="True"
+        EnableRowVirtualization="True"
+        GridLinesVisibility="None"
+        IsReadOnly="True"
+        ItemsSource="{Binding ViewModel.ConnectionsCollection}"
+        ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+        ScrollViewer.VerticalScrollBarVisibility="Visible"
+        VirtualizingPanel.IsVirtualizing="True"
+        VirtualizingPanel.VirtualizationMode="Recycling">
+
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Host}" Header="地址" />
+            <DataGridTextColumn
+                Width="80"
+                Binding="{Binding Upload}"
+                Header="上传" />
+            <DataGridTextColumn
+                Width="80"
+                Binding="{Binding Download}"
+                Header="下载" />
+            <DataGridTextColumn
+                Width="220"
+                Binding="{Binding Process}"
+                Header="进程" />
+            <DataGridTextColumn Binding="{Binding Chains}" Header="调用" />
+            <DataGridTextColumn Binding="{Binding Rule}" Header="规则" />
+        </DataGrid.Columns>
+    </DataGrid>
+</Page>

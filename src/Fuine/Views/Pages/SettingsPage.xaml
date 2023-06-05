@@ -1,0 +1,295 @@
+﻿<Page
+    x:Class="Fuine.Views.Pages.Settings.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Fuine.Converters"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="SettingsPage">
+    <Page.Resources>
+        <converters:EqualConverter x:Key="EqualConverter" />
+    </Page.Resources>
+    <ui:DynamicScrollViewer
+        Padding="20,0,20,20"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+        <StackPanel>
+            <ui:CardExpander Margin="0,0,0,10" Padding="14,20">
+                <ui:CardExpander.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="Medium"
+                        Text="应用主题" />
+                </ui:CardExpander.Header>
+                <StackPanel Margin="30,0">
+                    <RadioButton
+                        Margin="0,12,0,0"
+                        Command="{Binding ViewModel.ChangeThemeCommand}"
+                        CommandParameter="light"
+                        Content="浅色"
+                        GroupName="themeSelect"
+                        IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EqualConverter}, ConverterParameter=light, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeThemeCommand}"
+                        CommandParameter="dark"
+                        Content="深色"
+                        GroupName="themeSelect"
+                        IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EqualConverter}, ConverterParameter=dark, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeThemeCommand}"
+                        CommandParameter="auto"
+                        Content="自动"
+                        GroupName="themeSelect"
+                        IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EqualConverter}, ConverterParameter=auto, Mode=OneWay}" />
+                </StackPanel>
+            </ui:CardExpander>
+            <ui:CardExpander Margin="0,0,0,10" Padding="14,20">
+                <ui:CardExpander.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="Medium"
+                        Text="背景样式" />
+                </ui:CardExpander.Header>
+                <StackPanel Margin="30,0">
+                    <RadioButton
+                        Margin="0,12,0,0"
+                        Command="{Binding ViewModel.ChangeBackdropTypeCommand}"
+                        CommandParameter="mica"
+                        Content="云母"
+                        GroupName="backdropType"
+                        IsChecked="{Binding ViewModel.CurrentBackdropType, Converter={StaticResource EqualConverter}, ConverterParameter=mica, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeBackdropTypeCommand}"
+                        CommandParameter="acrylic"
+                        Content="丙烯"
+                        GroupName="backdropType"
+                        IsChecked="{Binding ViewModel.CurrentBackdropType, Converter={StaticResource EqualConverter}, ConverterParameter=acrylic, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeBackdropTypeCommand}"
+                        CommandParameter="tabbed"
+                        Content="标签"
+                        GroupName="backdropType"
+                        IsChecked="{Binding ViewModel.CurrentBackdropType, Converter={StaticResource EqualConverter}, ConverterParameter=tabbed, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeBackdropTypeCommand}"
+                        CommandParameter="auto"
+                        Content="自动"
+                        GroupName="backdropType"
+                        IsChecked="{Binding ViewModel.CurrentBackdropType, Converter={StaticResource EqualConverter}, ConverterParameter=auto, Mode=OneWay}" />
+                </StackPanel>
+            </ui:CardExpander>
+            <ui:CardExpander Margin="0,0,0,10" Padding="14,20">
+                <ui:CardExpander.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="Medium"
+                        Text="代理模式" />
+                </ui:CardExpander.Header>
+                <StackPanel Margin="30,0">
+                    <RadioButton
+                        Margin="0,12,0,0"
+                        Command="{Binding ViewModel.ChangeProxyModeCommand}"
+                        CommandParameter="rule"
+                        Content="规则"
+                        GroupName="modeSelect"
+                        IsChecked="{Binding ViewModel.CurrentProxyMode, Converter={StaticResource EqualConverter}, ConverterParameter=rule, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeProxyModeCommand}"
+                        CommandParameter="direct"
+                        Content="直连"
+                        GroupName="modeSelect"
+                        IsChecked="{Binding ViewModel.CurrentProxyMode, Converter={StaticResource EqualConverter}, ConverterParameter=direct, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeProxyModeCommand}"
+                        CommandParameter="global"
+                        Content="全局"
+                        GroupName="modeSelect"
+                        IsChecked="{Binding ViewModel.CurrentProxyMode, Converter={StaticResource EqualConverter}, ConverterParameter=global, Mode=OneWay}" />
+                </StackPanel>
+            </ui:CardExpander>
+            <ui:CardExpander Margin="0,0,0,10" Padding="14,19.5">
+                <ui:CardExpander.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="Medium"
+                        Text="日志等级" />
+                </ui:CardExpander.Header>
+                <StackPanel Margin="30,0">
+                    <RadioButton
+                        Margin="0,12,0,0"
+                        Command="{Binding ViewModel.ChangeLogLevelCommand}"
+                        CommandParameter="silent"
+                        Content="静默"
+                        GroupName="levelSelect"
+                        IsChecked="{Binding ViewModel.CurrentLogLevel, Converter={StaticResource EqualConverter}, ConverterParameter=silent, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeLogLevelCommand}"
+                        CommandParameter="info"
+                        Content="信息"
+                        GroupName="levelSelect"
+                        IsChecked="{Binding ViewModel.CurrentLogLevel, Converter={StaticResource EqualConverter}, ConverterParameter=info, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeLogLevelCommand}"
+                        CommandParameter="debug"
+                        Content="调试"
+                        GroupName="levelSelect"
+                        IsChecked="{Binding ViewModel.CurrentLogLevel, Converter={StaticResource EqualConverter}, ConverterParameter=debug, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeLogLevelCommand}"
+                        CommandParameter="error"
+                        Content="错误"
+                        GroupName="levelSelect"
+                        IsChecked="{Binding ViewModel.CurrentLogLevel, Converter={StaticResource EqualConverter}, ConverterParameter=error, Mode=OneWay}" />
+                    <RadioButton
+                        Margin="0,8,0,0"
+                        Command="{Binding ViewModel.ChangeLogLevelCommand}"
+                        CommandParameter="warning"
+                        Content="警告"
+                        GroupName="levelSelect"
+                        IsChecked="{Binding ViewModel.CurrentLogLevel, Converter={StaticResource EqualConverter}, ConverterParameter=warning, Mode=OneWay}" />
+                </StackPanel>
+            </ui:CardExpander>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,19"
+                Header="开机自启"
+                Icon="Flash20">
+                <ui:ToggleSwitch Command="{Binding ViewModel.AutoStartCommand}" IsChecked="{Binding ViewModel.IsAutoStart}" />
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,19"
+                Header="托盘启动"
+                Icon="LeafTwo20">
+                <ui:ToggleSwitch Command="{Binding ViewModel.TrayStartCommand}" IsChecked="{Binding ViewModel.IsTrayStart}" />
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,19"
+                Header="系统代理"
+                Icon="HardDrive20">
+                <ui:ToggleSwitch Command="{Binding ViewModel.SystemProxyCommand}" IsChecked="{Binding ViewModel.IsSystemProxy}" />
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,19"
+                Header="解除回环"
+                Icon="StoreMicrosoft20">
+                <ui:ToggleSwitch Command="{Binding ViewModel.LoopbackCommand}" IsChecked="{Binding ViewModel.IsLoopback}" />
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,11.5"
+                Header="混合端口">
+                <ui:TextBox
+                    MinWidth="120"
+                    ClearButtonEnabled="False"
+                    Text="{Binding ViewModel.ClashMixedPort}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="LostFocus">
+                            <i:InvokeCommandAction Command="{Binding ViewModel.ChangeMixedPortCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ui:TextBox>
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,12"
+                Header="测速地址">
+                <ui:TextBox
+                    MinWidth="400"
+                    ClearButtonEnabled="False"
+                    Text="{Binding ViewModel.DelayTestUrl, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding ViewModel.ChangeDelayTestUrlCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ui:TextBox>
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,19"
+                Header="内网连接">
+                <ui:ToggleSwitch Command="{Binding ViewModel.ChangeAllowLanCommand}" IsChecked="{Binding ViewModel.AllowLan}" />
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,19"
+                Header="自动更新"
+                Icon="ArrowSync20">
+                <ui:ToggleSwitch Command="{Binding ViewModel.AutoUpdateCommand}" IsChecked="{Binding ViewModel.IsAutoUpdate}" />
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,13"
+                Header="配置目录">
+                <ui:Button
+                    Width="120"
+                    Command="{Binding ViewModel.OpenProfilesCommand}"
+                    Content="打开" />
+            </ui:CardControl>
+            <ui:CardControl
+                Margin="0,0,0,10"
+                Padding="14,13"
+                Header="任务计划">
+                <ui:Button
+                    Width="120"
+                    Command="{Binding ViewModel.ClearTaskSchedulerCommand}"
+                    Content="清理" />
+            </ui:CardControl>
+            <ui:CardExpander Padding="14,20" Icon="Chat20">
+                <ui:CardExpander.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="Medium"
+                        Text="关于应用" />
+                </ui:CardExpander.Header>
+                <ui:CardExpander.Content>
+                    <StackPanel>
+                        <TextBlock
+                            Margin="0,20"
+                            FontSize="20"
+                            Text="当前版本" />
+                        <TextBlock Margin="10,0" Text="{Binding ViewModel.AppVersion}" />
+                        <TextBlock
+                            Margin="0,20"
+                            FontSize="20"
+                            Text="控制地址" />
+                        <TextBlock Margin="10,0" Text="{Binding ViewModel.ControllerAddress}" />
+                        <TextBlock
+                            Margin="0,20"
+                            FontSize="20"
+                            Text="相关链接" />
+                        <ui:Hyperlink
+                            Content="Fuine"
+                            Icon="{ui:SymbolIcon Link24}"
+                            NavigateUri="https://github.com/chzuka/fuine" />
+                        <ui:Hyperlink
+                            Content="Clash"
+                            Icon="{ui:SymbolIcon Link24}"
+                            NavigateUri="https://github.com/Dreamacro/clash" />
+                        <ui:Hyperlink
+                            Content="ClashMeta"
+                            Icon="{ui:SymbolIcon Link24}"
+                            NavigateUri="https://github.com/MetaCubeX/clash.Meta" />
+                        <ui:Hyperlink
+                            Content="Subconverter"
+                            Icon="{ui:SymbolIcon Link24}"
+                            NavigateUri="https://github.com/tindy2013/subconverter" />
+                    </StackPanel>
+                </ui:CardExpander.Content>
+            </ui:CardExpander>
+        </StackPanel>
+    </ui:DynamicScrollViewer>
+</Page>

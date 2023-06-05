@@ -1,0 +1,89 @@
+﻿<ui:FluentWindow
+    x:Class="Fuine.Views.Windows.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Width="1100"
+    Height="650"
+    ExtendsContentIntoTitleBar="True"
+    Visibility="{Binding ViewModel.MainWindowVisibility}"
+    WindowBackdropType="{Binding ViewModel.BackdropType}"
+    WindowStartupLocation="CenterScreen"
+    WindowState="{Binding ViewModel.MainWindowState}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger
+            EventName="Closing">
+            <i:InvokeCommandAction
+                Command="{Binding ViewModel.HideCommand}"
+                PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+        <i:EventTrigger
+            EventName="Loaded">
+            <i:InvokeCommandAction
+                Command="{Binding ViewModel.LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="*" />
+        </Grid.RowDefinitions>
+        <ui:NavigationView
+            x:Name="RootNavigation"
+            Grid.Row="1"
+            Margin="1,0,0,1"
+            FooterMenuItemsSource="{Binding ViewModel.NavigationFooter}"
+            MenuItemsSource="{Binding ViewModel.NavigationItems}"
+            PaneDisplayMode="LeftFluent">
+            <ui:NavigationView.Header>
+                <ui:BreadcrumbBar
+                    Margin="42,32"
+                    FontSize="28"
+                    FontWeight="DemiBold" />
+            </ui:NavigationView.Header>
+        </ui:NavigationView>
+        <ui:TitleBar
+            Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
+            Grid.Row="0">
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon
+                    Source="pack://application:,,,/Resources/Images/app.png" />
+            </ui:TitleBar.Icon>
+            <ui:TitleBar.Tray>
+                <ui:NotifyIcon
+                    FocusOnLeftClick="True"
+                    Icon="pack://application:,,,/Resources/Images/app.png"
+                    MenuOnRightClick="True"
+                    TooltipText="Fuine">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger
+                            EventName="LeftClick">
+                            <i:InvokeCommandAction
+                                Command="{Binding ViewModel.ShowCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ui:NotifyIcon.Menu>
+                        <ContextMenu>
+                            <!--<ui:MenuItem
+                                Header="代理"
+                                Icon="{ui:SymbolIcon Globe20}" />
+                            <ui:MenuItem
+                                Header="模式"
+                                Icon="{ui:SymbolIcon ToggleLeft20}" />
+                            <ui:MenuItem
+                                Header="设置"
+                                Icon="{ui:SymbolIcon Settings20}" />-->
+                            <ui:MenuItem
+                                Click="App_Exit"
+                                Header="退出"
+                                Icon="{ui:SymbolIcon Power20}" />
+                        </ContextMenu>
+                    </ui:NotifyIcon.Menu>
+                </ui:NotifyIcon>
+            </ui:TitleBar.Tray>
+        </ui:TitleBar>
+    </Grid>
+</ui:FluentWindow>
