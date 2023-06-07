@@ -18,10 +18,14 @@ public class RandomPortHelper
         return port;
     }
 
+    public static void GetUsedPort()
+    {
+        used = new(IPGlobalProperties.GetIPGlobalProperties().
+            GetActiveTcpListeners().Select(_ => _.Port));
+    }
+
     public static int TryUsePort(int port)
     {
-        used = new(IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners().Select(_ => _.Port));
-
         return used.Contains(port) ? GetRandomPort() : port;
     }
 }

@@ -14,16 +14,24 @@ public partial class LogsPage : INavigableView<LogsViewModel>
 
     private void DataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
     {
-        // 如果没有选中单元格，直接返回
-        if (DataGrid.SelectedCells.Count == 0)
+        try
         {
-            return;
+            // 如果没有选中单元格，直接返回
+            if (DataGrid.SelectedCells.Count == 0)
+            {
+                return;
+            }
+
+            // 获取选中单元格的值
+            string? selectedCellValue = ((Log)DataGrid.SelectedCells[0].Item).
+                PayLoad?.ToString();
+
+            // 将选中单元格的值复制到剪贴板中
+            Clipboard.SetDataObject(selectedCellValue);
         }
+        catch (Exception)
+        {
 
-        // 获取选中单元格的值
-        string? selectedCellValue = ((Log)DataGrid.SelectedCells[0].Item).PayLoad?.ToString();
-
-        // 将选中单元格的值复制到剪贴板中
-        System.Windows.Clipboard.SetDataObject(selectedCellValue);
+        }
     }
 }

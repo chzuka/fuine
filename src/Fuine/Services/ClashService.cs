@@ -30,7 +30,14 @@ public static class ClashService
     #region PutAsync
     private static async Task PutAsync<TValue>(string url, TValue value)
     {
-        await client.PutAsJsonAsync(url, value);
+        try
+        {
+            await client.PutAsJsonAsync(url, value);
+        }
+        catch (Exception)
+        {
+
+        }
     }
     #endregion
 
@@ -66,6 +73,11 @@ public static class ClashService
     private static async Task GetProxiesAsync()
     {
         var content = await GetAsync<ClashProxyData>($"{Global.Clash配置.Clash外部控制地址}/proxies");
+
+        if (content is null)
+        {
+            return;
+        }
 
         Dictionary<string, Proxy> proxies = new();
         foreach (var _ in content!.Proxies)
@@ -114,7 +126,7 @@ public static class ClashService
                 Where(x => proxy.Value.All!.
                 Any(y => y == x.Name)).
                 OrderByDescending(_ => _.Name == proxy.Value.Now).
-                ThenBy(_ => _.Delay == 0 ? 9000 : _.Delay).
+                ThenBy(_ => _.Delay is 0 or null ? 9000 : _.Delay).
                 ToList(),
             });
         }
@@ -142,16 +154,9 @@ public static class ClashService
         Global.Clash配置.Mode = configs.Mode;
         Global.Clash配置.TunMode = configs.Tun.Enable;
 
-        if (configs.MixedPort == Global.Fuine配置.MixedPort)
-        {
-            Global.Clash配置.MixedPort = configs.MixedPort;
-        }
-        else
-        {
-            await PatchConfigAsync("mixed-port",
-                Global.Clash配置.MixedPort =
-                RandomPortHelper.TryUsePort(Global.Fuine配置.MixedPort));
-        }
+        await PatchConfigAsync("mixed-port",
+            Global.Clash配置.MixedPort =
+            RandomPortHelper.TryUsePort(Global.Fuine配置.MixedPort));
     }
     #endregion
 

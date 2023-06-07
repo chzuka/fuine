@@ -37,6 +37,13 @@ internal class TaskSchedulerService
             definition = task.Definition;
         }
 
+
+        if (definition.Triggers.Any(_ => _.TriggerType == (
+        trigger == "start" ? AutoStartTrigger().TriggerType : AutoUpdateTrigger().TriggerType)))
+        {
+            return;
+        }
+
         definition.Triggers.Add(trigger == "start" ?
             AutoStartTrigger() : AutoUpdateTrigger());
 
@@ -90,12 +97,10 @@ internal class TaskSchedulerService
 
     private static Trigger AutoUpdateTrigger()
     {
-        return new DailyTrigger
+        return new TimeTrigger
         {
-            DaysInterval = 1,
-            StartBoundary = DateTime.Today.AddHours(12),
             Repetition = { Interval = TimeSpan.FromHours(2) },
-            Enabled = true
+            ExecutionTimeLimit = TimeSpan.FromMinutes(5),
         };
     }
 

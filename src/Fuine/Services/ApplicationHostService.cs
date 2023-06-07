@@ -41,8 +41,8 @@ public class ApplicationHostService : IHostedService
 
             _ = Task.Run(async () =>
             {
+                RandomPortHelper.GetUsedPort();
                 CoreService.StartCore();
-
                 await ClashService.GetConfigAsync();
 
                 if (Global.Fuine配置.AutoUpdate)
