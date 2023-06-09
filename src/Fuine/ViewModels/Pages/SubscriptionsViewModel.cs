@@ -31,8 +31,16 @@ public partial class SubscriptionsViewModel : ObservableObject, INavigationAware
     }
 
     [RelayCommand]
+    public static async Task OnRestoreAsync()
+    {
+        await SubscriptionsService.ReloadSubscriptions();
+        await ClashService.ReloadConfigs(Global.Clash配置文件);
+    }
+
+    [RelayCommand]
     public async Task OnChangeSubscriptions()
     {
-        await SubscriptionsService.SaveSubscriptionsAsync(Links);
+        await SubscriptionsService.SaveSubscriptionsAsync(Links, "clash");
     }
+
 }

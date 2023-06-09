@@ -208,9 +208,14 @@ public partial class SettingsViewModel : ObservableObject, INavigationAware
     }
 
     [RelayCommand]
-    private static void OnClearTaskScheduler()
+    private async Task OnClearTaskSchedulerAsync()
     {
         TaskSchedulerService.RemoveTask("Fuine");
+
+        Global.Fuine配置.AutoUpdate = IsAutoUpdate = false;
+        Global.Fuine配置.AutoStart = IsAutoStart = false;
+
+        await ConfigService.WriteConfig();
     }
 
     [RelayCommand]

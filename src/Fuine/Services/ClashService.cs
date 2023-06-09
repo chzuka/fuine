@@ -141,6 +141,8 @@ public static class ClashService
     #region 获取配置
     public static async Task GetConfigAsync()
     {
+        client.DefaultRequestHeaders.Authorization = new("Bearer", Global.Secret);
+
         var configs = await GetAsync<ClashConfigs>($"{Global.Clash配置.Clash外部控制地址}/configs");
 
         if (configs == null)
@@ -216,6 +218,7 @@ public static class ClashService
     {
         using ClientWebSocket socket = new();
         socket.Options.Proxy = null;
+        socket.Options.SetRequestHeader("Authorization", $"Bearer {Global.Secret}");
 
         try
         {

@@ -9,7 +9,7 @@ public class CoreService
         Global.Clash配置.ControllerPort = RandomPortHelper.TryUsePort(9090);
         string name = Path.Combine(Global.Clash目录, "clash.exe");
 
-        string arguments = $"-f {Global.Clash配置文件} -d {Global.Clash目录} -ext-ctl \":{Global.Clash配置.ControllerPort}\"";
+        string arguments = $"-f {Global.Clash配置文件} -d {Global.Clash目录} -ext-ctl \":{Global.Clash配置.ControllerPort}\" -secret {Global.Secret}";
 
         Process process = new()
         {

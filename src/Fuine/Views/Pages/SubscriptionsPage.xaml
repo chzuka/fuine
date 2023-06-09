@@ -18,10 +18,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ui:CardControl
             Margin="20,0,20,10"
+            Padding="20,13.5"
             Header="更新订阅"
             Icon="ArrowDownload20">
             <ui:Button
@@ -29,8 +31,19 @@
                 Command="{Binding ViewModel.UpdateCommand}"
                 Content="更新" />
         </ui:CardControl>
-        <ScrollViewer
+        <ui:CardControl
             Grid.Row="1"
+            Margin="20,0,20,10"
+            Padding="20,13"
+            Header="订阅缓存"
+            Icon="ArrowDownload20">
+            <ui:Button
+                Width="140"
+                Command="{Binding ViewModel.RestoreCommand}"
+                Content="还原" />
+        </ui:CardControl>
+        <ScrollViewer
+            Grid.Row="2"
             Margin="20,0,7,20"
             VerticalAlignment="Stretch"
             VerticalScrollBarVisibility="Visible">
@@ -41,9 +54,9 @@
                 AcceptsReturn="True"
                 ClearButtonEnabled="False"
                 FontSize="16"
+                MouseLeave="Textbox_MouseLeave"
                 PlaceholderText="此处添加订阅"
-                Text="{Binding ViewModel.Links, UpdateSourceTrigger=PropertyChanged}"
-                MouseLeave="Textbox_MouseLeave">
+                Text="{Binding ViewModel.Links, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeave">
                         <i:InvokeCommandAction Command="{Binding ViewModel.ChangeSubscriptionsCommand}" />

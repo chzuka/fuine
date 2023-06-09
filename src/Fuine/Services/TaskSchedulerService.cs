@@ -28,6 +28,7 @@ internal class TaskSchedulerService
             definition.Settings.DisallowStartOnRemoteAppSession = false;
 
             definition.Settings.Compatibility = TaskCompatibility.V2_3;
+            definition.Settings.MultipleInstances = TaskInstancesPolicy.Parallel;
             definition.Settings.ExecutionTimeLimit = TimeSpan.Zero;
 
             definition.Actions.Add(Path.Combine(Global.应用目录, "Fuine.exe"), "-up");

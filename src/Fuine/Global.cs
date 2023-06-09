@@ -25,6 +25,8 @@ internal class Global
     public static readonly string Fuine配置文件 =
         Path.Combine(资源目录, "config.toml");
 
+    public static string Secret { get; set; } = Guid.NewGuid().ToString();
+
     public static AppConfig Fuine配置 { get; set; } = new();
     public static ClashConfig Clash配置 { get; set; } = new();
 }

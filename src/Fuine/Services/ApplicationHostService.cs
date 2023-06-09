@@ -56,6 +56,18 @@ public class ApplicationHostService : IHostedService
                 }
             }, cancellationToken);
 
+            _ = Task.Run(async () =>
+            {
+                if (SubscriptionsService.ReadSubscriptions() == string.Empty)
+                {
+                    return;
+                }
+
+                Thread.Sleep(6000);
+                await SubscriptionsService.UpdateSubscriptions();
+                await ClashService.ReloadConfigs(Global.Clash配置文件);
+            }, cancellationToken);
+
             await HandleActivationAsync();
         }
     }
